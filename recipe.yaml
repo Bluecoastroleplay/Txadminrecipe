@@ -3,7 +3,7 @@ $onesync: on
 name: Bluecoast Qbox (custom)
 version: 1.0.0
 author: Bluecoast Roleplay
-description: Bluecoast Qbox — core Ox/voice/banking/weather + your GitHub resources (HUD, sat map, Illenium fork, MDT, garages, drugs). No NPWD. No heist minigames / truck robbery / prison / diving packs.
+description: Bluecoast Qbox — core Ox/voice (pma-voice + mm_radio)/banking/weather + your GitHub resources (HUD, sat map, Illenium fork, MDT, garages, drugs, pillbox map). No NPWD. No heist minigames / truck robbery / prison / diving packs.
 
 tasks:
   #  Download Base Files
@@ -118,11 +118,11 @@ tasks:
     src: https://github.com/AvarianKnight/pma-voice
 
   - action: download_file
-    path: ./tmp/qbx_radio.zip
-    url: https://github.com/qbox-project/qbx_radio/releases/latest/download/qbx_radio.zip
+    path: ./tmp/mm_radio.zip
+    url: https://github.com/qbox-project/mm_radio/releases/latest/download/mm_radio.zip
   - action: unzip
-    dest: ./resources/[qbx]
-    src: ./tmp/qbx_radio.zip
+    dest: ./resources/[voice]
+    src: ./tmp/mm_radio.zip
 
   # Downloading Qbox resources
   - action: download_file
@@ -334,6 +334,12 @@ tasks:
     dest: ./resources/[standalone]/qbx_weed
     ref: main
     src: https://github.com/Bluecoastroleplay/qbx_weed
+
+  # ASSETS
+  - action: download_github
+    dest: ./resources/[assets]/pillbox
+    ref: main
+    src: https://github.com/Lorenc95/pillbox
 
   - action: query_database
     file: ./resources/[standalone]/bc-mdt/sql/install.sql
