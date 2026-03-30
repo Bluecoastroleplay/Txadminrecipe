@@ -1,9 +1,9 @@
 $engine: 3
 $onesync: on
 name: Bluecoast Qbox (custom)
-version: 1.0.8
+version: 1.1.0
 author: Bluecoast Roleplay
-description: Bluecoast Qbox — slim Qbox+Ox stack (pma-voice, mm_radio, qbx_chat_theme, radial, scoreboard, qbx_idcard) + Bluecoast resources (HUD, sat map, illenium-appearance, MDT, drugs, pillbox). Items from Oxdata. No NPWD; no safecracker/mhacking/prison/heist minigame packs.
+description: Bluecoast Qbox — Qbox+Ox (pma-voice, mm_radio, qbx_chat_theme, radial, scoreboard, qbx_idcard, qbx_properties) + Bluecoast resources (HUD, sat map, illenium-appearance, MDT, drugs, pillbox). Items from Oxdata. No NPWD; no safecracker/mhacking/prison/heist minigame packs.
 
 tasks:
   #  Download Base Files
@@ -144,10 +144,16 @@ tasks:
   - action: query_database
     file: ./resources/[qbx]/qbx_core/qbx_core.sql
 
-  # Strip properties + NPWD from characterDataTables (not installed by this recipe) — see overrides/qbx_core/config/server.lua
+  # Strip NPWD rows from characterDataTables — see overrides/qbx_core/config/server.lua (properties = qbx_properties)
   - action: copy_path
     src: ./tmp/bc-recipe/overrides/qbx_core/config/server.lua
     dest: ./resources/[qbx]/qbx_core/config/server.lua
+    overwrite: true
+
+  # startingApartment false — no qbx_apartments in recipe (true = infinite black screen after new char)
+  - action: copy_path
+    src: ./tmp/bc-recipe/overrides/qbx_core/config/client.lua
+    dest: ./resources/[qbx]/qbx_core/config/client.lua
     overwrite: true
 
   - action: download_file
@@ -256,6 +262,20 @@ tasks:
     dest: ./resources/[qbx]/qbx_idcard
     ref: main
     src: https://github.com/Qbox-project/qbx_idcard
+
+  - action: download_github
+    dest: ./resources/[qbx]/qbx_properties
+    ref: main
+    src: https://github.com/Qbox-project/qbx_properties
+
+  - action: query_database
+    file: ./resources/[qbx]/qbx_properties/property.sql
+
+  - action: query_database
+    file: ./resources/[qbx]/qbx_properties/property_garages.sql
+
+  - action: query_database
+    file: ./resources/[qbx]/qbx_properties/decorations.sql
 
   # OX
   - action: download_file

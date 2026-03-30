@@ -1,5 +1,5 @@
 -- Bluecoast recipe override — sync with upstream qbx_core/config/server.lua when you update qbx_core.
--- Strips `properties` + `npwd_*` from characterDataTables (no qbx_properties / NPWD in this recipe).
+-- Strips `npwd_*` only (NPWD not in recipe). `properties` kept — qbx_properties + property.sql ship with recipe.
 return {
     updateInterval = 5, -- how often to update player data in minutes
 
@@ -62,6 +62,7 @@ return {
     ---@alias ColumnName string
     ---@type [TableName, ColumnName][]
     characterDataTables = {
+        {'properties', 'owner'},
         {'bank_accounts_new', 'id'},
         {'playerskins', 'citizenid'},
         {'player_mails', 'citizenid'},
