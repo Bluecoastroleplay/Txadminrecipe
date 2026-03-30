@@ -1,0 +1,339 @@
+$engine: 3
+$onesync: on
+name: Bluecoast Qbox (custom)
+version: 1.0.0
+author: Bluecoast Roleplay
+description: Bluecoast Qbox — core Ox/voice/banking/weather + your GitHub resources (HUD, sat map, Illenium fork, MDT, garages, drugs). No NPWD. No heist minigames / truck robbery / prison / diving packs.
+
+tasks:
+  #  Download Base Files
+  - action: download_github
+    src: https://github.com/qbox-project/txAdminRecipe
+    ref: main
+    dest: ./tmp/qbox
+
+  # Bundled server.cfg (txAdmin fills {{...}} during deploy)
+  - action: move_path
+    src: ./server.cfg
+    dest: ./server.cfg
+
+  - action: move_path
+    src: ./tmp/qbox/permissions.cfg
+    dest: ./permissions.cfg
+
+  - action: move_path
+    src: ./tmp/qbox/ox.cfg
+    dest: ./ox.cfg
+
+  - action: move_path
+    src: ./tmp/qbox/voice.cfg
+    dest: ./voice.cfg
+
+  - action: move_path
+    src: ./tmp/qbox/misc.cfg
+    dest: ./misc.cfg
+
+  - action: move_path
+    src: ./tmp/qbox/myLogo.png
+    dest: ./myLogo.png
+
+  # Prepare Database
+  - action: connect_database
+  - action: query_database
+    file: ./tmp/qbox/qbox.sql
+
+  # STANDALONE
+  - action: download_github
+    src: https://github.com/citizenfx/cfx-server-data
+    subpath: resources
+    dest: ./resources/[cfx-default]
+  - action: remove_path
+    path: ./resources/[cfx-default]/[gameplay]/chat
+
+  - action: download_github
+    dest: ./resources/[standalone]/bob74_ipl
+    ref: master
+    src: https://github.com/Bob74/bob74_ipl
+
+  - action: download_file
+    path: ./tmp/screencapture.zip
+    url: https://github.com/itschip/screencapture/releases/latest/download/screencapture.zip
+  - action: unzip
+    dest: ./resources/[standalone]/
+    src: ./tmp/screencapture.zip
+
+  - action: download_github
+    dest: ./resources/[standalone]/scully_emotemenu
+    ref: main
+    src: https://github.com/Scullyy/scully_emotemenu
+
+  - action: download_file
+    path: ./tmp/Renewed-Banking.zip
+    url: https://github.com/Renewed-Scripts/Renewed-Banking/releases/latest/download/Renewed-Banking.zip
+  - action: unzip
+    dest: ./resources/[standalone]
+    src: ./tmp/Renewed-Banking.zip
+
+  - action: download_github
+    dest: ./resources/[standalone]/illenium-appearance
+    ref: main
+    src: https://github.com/Bluecoastroleplay/Illenium-appearance-Rework-
+
+  - action: download_github
+    dest: ./resources/[standalone]/MugShotBase64
+    ref: main
+    src: https://github.com/BaziForYou/MugShotBase64
+    subpath: MugShotBase64
+
+  - action: download_file
+    url: https://raw.githubusercontent.com/BaziForYou/MugShotBase64/main/README.md
+    path: ./resources/[standalone]/MugShotBase64/README.md
+
+  - action: download_file
+    url: https://raw.githubusercontent.com/BaziForYou/MugShotBase64/main/LICENSE.md
+    path: ./resources/[standalone]/MugShotBase64/LICENSE.md
+
+  - action: download_file
+    path: ./tmp/loadscreen.zip
+    url: https://github.com/D4isDAVID/loadscreen/releases/latest/download/loadscreen.zip
+  - action: unzip
+    dest: ./resources/[standalone]
+    src: ./tmp/loadscreen.zip
+  - action: copy_path
+    src: ./myLogo.png
+    dest: ./resources/[standalone]/loadscreen/html/assets/logo.png
+    overwrite: true
+
+  - action: download_file
+    path: ./tmp/mana_audio.zip
+    url: https://github.com/Manason/mana_audio/releases/latest/download/mana_audio.zip
+  - action: unzip
+    dest: ./resources/[standalone]
+    src: ./tmp/mana_audio.zip
+
+  # VOICE
+  - action: download_github
+    dest: ./resources/[voice]/pma-voice
+    ref: main
+    src: https://github.com/AvarianKnight/pma-voice
+
+  - action: download_file
+    path: ./tmp/qbx_radio.zip
+    url: https://github.com/qbox-project/qbx_radio/releases/latest/download/qbx_radio.zip
+  - action: unzip
+    dest: ./resources/[qbx]
+    src: ./tmp/qbx_radio.zip
+
+  # Downloading Qbox resources
+  - action: download_file
+    path: ./tmp/qbx_core.zip
+    url: https://github.com/qbox-project/qbx_core/releases/latest/download/qbx_core.zip
+  - action: unzip
+    dest: ./resources/[qbx]
+    src: ./tmp/qbx_core.zip
+  - action: query_database
+    file: ./resources/[qbx]/qbx_core/qbx_core.sql
+
+  - action: download_file
+    path: ./tmp/qbx_vehicles.zip
+    url: https://github.com/qbox-project/qbx_vehicles/releases/latest/download/qbx_vehicles.zip
+  - action: unzip
+    dest: ./resources/[qbx]
+    src: ./tmp/qbx_vehicles.zip
+  - action: query_database
+    file: ./resources/[qbx]/qbx_vehicles/vehicles.sql
+
+  - action: download_file
+    path: ./tmp/qbx_management.zip
+    url: https://github.com/qbox-project/qbx_management/releases/latest/download/qbx_management.zip
+  - action: unzip
+    dest: ./resources/[qbx]
+    src: ./tmp/qbx_management.zip
+
+  - action: waste_time # prevent github throttling
+    seconds: 10
+
+  - action: download_file
+    path: ./tmp/Renewed-Weathersync.zip
+    url: https://github.com/Renewed-Scripts/Renewed-Weathersync/releases/latest/download/Renewed-Weathersync.zip
+  - action: unzip
+    dest: ./resources/[standalone]
+    src: ./tmp/Renewed-Weathersync.zip
+
+  - action: download_file
+    path: ./tmp/vehiclehandler.zip
+    url: https://github.com/QuantumMalice/vehiclehandler/releases/latest/download/vehiclehandler.zip
+  - action: unzip
+    dest: ./resources/[standalone]
+    src: ./tmp/vehiclehandler.zip
+
+  - action: download_github
+    dest: ./resources/[qbx]/qbx_garages
+    ref: main
+    src: https://github.com/Bluecoastroleplay/qbx_garages
+
+  - action: download_file
+    path: ./tmp/qbx_smallresources.zip
+    url: https://github.com/qbox-project/qbx_smallresources/releases/latest/download/qbx_smallresources.zip
+  - action: unzip
+    dest: ./resources/[qbx]
+    src: ./tmp/qbx_smallresources.zip
+
+  - action: download_file
+    path: ./tmp/qbx_density.zip
+    url: https://github.com/Qbox-project/qbx_density/releases/latest/download/qbx_density.zip
+  - action: unzip
+    dest: ./resources/[qbx]
+    src: ./tmp/qbx_density.zip
+
+  - action: download_file
+    path: ./tmp/qbx_adminmenu.zip
+    url: https://github.com/qbox-project/qbx_adminmenu/releases/latest/download/qbx_adminmenu.zip
+  - action: unzip
+    dest: ./resources/[qbx]
+    src: ./tmp/qbx_adminmenu.zip
+
+  - action: download_github
+    dest: ./resources/[qbx]/qbx_hud
+    ref: main
+    src: https://github.com/Bluecoastroleplay/qbx_hud
+
+  - action: download_file
+    path: ./tmp/qbx_spawn.zip
+    url: https://github.com/qbox-project/qbx_spawn/releases/latest/download/qbx_spawn.zip
+  - action: unzip
+    dest: ./resources/[qbx]
+    src: ./tmp/qbx_spawn.zip
+
+  - action: download_file
+    path: ./tmp/qbx_customs.zip
+    url: https://github.com/qbox-project/qbx_customs/releases/latest/download/qbx_customs.zip
+  - action: unzip
+    dest: ./resources/[qbx]
+    src: ./tmp/qbx_customs.zip
+
+  - action: download_file
+    path: ./tmp/qbx_vehiclekeys.zip
+    url: https://github.com/qbox-project/qbx_vehiclekeys/releases/latest/download/qbx_vehiclekeys.zip
+  - action: unzip
+    dest: ./resources/[qbx]
+    src: ./tmp/qbx_vehiclekeys.zip
+
+  # OX
+  - action: download_file
+    path: ./tmp/ox_lib.zip
+    url: https://github.com/communityox/ox_lib/releases/latest/download/ox_lib.zip
+  - action: unzip
+    dest: ./resources/[ox]
+    src: ./tmp/ox_lib.zip
+
+  - action: download_file
+    path: ./tmp/ox_target.zip
+    url: https://github.com/communityox/ox_target/releases/latest/download/ox_target.zip
+  - action: unzip
+    dest: ./resources/[ox]
+    src: ./tmp/ox_target.zip
+
+  - action: download_file
+    path: ./tmp/oxmysql.zip
+    url: https://github.com/communityox/oxmysql/releases/latest/download/oxmysql.zip
+  - action: unzip
+    dest: ./resources/[ox]
+    src: ./tmp/oxmysql.zip
+
+  - action: download_file
+    path: ./tmp/ox_doorlock.zip
+    url: https://github.com/communityox/ox_doorlock/releases/latest/download/ox_doorlock.zip
+  - action: unzip
+    dest: ./resources/[ox]
+    src: ./tmp/ox_doorlock.zip
+
+  - action: download_file
+    path: ./tmp/ox_inventory.zip
+    url: https://github.com/communityox/ox_inventory/releases/latest/download/ox_inventory.zip
+  - action: unzip
+    dest: ./resources/[ox]
+    src: ./tmp/ox_inventory.zip
+
+  - action: move_path
+    src: ./tmp/qbox/items.lua
+    dest: ./resources/[ox]/ox_inventory/data/items.lua
+    overwrite: true
+
+  - action: download_github
+    dest: ./resources/[ox]/ox_fuel
+    ref: main
+    src: https://github.com/communityox/ox_fuel
+
+  # Bluecoast Roleplay — custom resources (https://github.com/Bluecoastroleplay)
+  - action: waste_time
+    seconds: 5
+
+  - action: download_github
+    dest: ./resources/[standalone]/bcrp_satmap
+    ref: main
+    src: https://github.com/Bluecoastroleplay/bcrp_satmap
+
+  - action: download_github
+    dest: ./resources/[standalone]/bc-mdt
+    ref: main
+    src: https://github.com/Bluecoastroleplay/bc-mdt
+
+  - action: download_github
+    dest: ./resources/[standalone]/policesystem
+    ref: main
+    src: https://github.com/Bluecoastroleplay/policesystem
+
+  - action: download_github
+    dest: ./resources/[standalone]/gs_robbery
+    ref: main
+    src: https://github.com/Bluecoastroleplay/gs_robbery
+
+  - action: download_github
+    dest: ./resources/[standalone]/bcrp_trucking
+    ref: main
+    src: https://github.com/Bluecoastroleplay/bcrp_trucking
+
+  - action: download_github
+    dest: ./resources/[standalone]/qbx_blackmarket
+    ref: main
+    src: https://github.com/Bluecoastroleplay/qbx_blackmarket
+
+  - action: download_github
+    dest: ./resources/[standalone]/qbx_cocaine
+    ref: main
+    src: https://github.com/Bluecoastroleplay/qbx_cocaine
+
+  - action: download_github
+    dest: ./resources/[standalone]/qbx_drugs
+    ref: main
+    src: https://github.com/Bluecoastroleplay/qbx_drugs
+
+  - action: download_github
+    dest: ./resources/[standalone]/qbx_rolling
+    ref: main
+    src: https://github.com/Bluecoastroleplay/qbx_rolling
+
+  - action: download_github
+    dest: ./resources/[standalone]/qbx_weed
+    ref: main
+    src: https://github.com/Bluecoastroleplay/qbx_weed
+
+  - action: query_database
+    file: ./resources/[standalone]/bc-mdt/sql/install.sql
+
+  - action: query_database
+    file: ./resources/[standalone]/bc-mdt/sql/penal_codes.sql
+
+  - action: query_database
+    file: ./resources/[standalone]/qbx_weed/sql/qbx_weed.sql
+
+  - action: query_database
+    file: ./resources/[standalone]/qbx_cocaine/sql/qbx_cocaine.sql
+
+  - action: query_database
+    file: ./resources/[standalone]/qbx_drugs/qbx_drugs.sql
+
+  # Clean up
+  - action: remove_path
+    path: ./tmp
