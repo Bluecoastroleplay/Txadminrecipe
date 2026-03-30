@@ -1,9 +1,9 @@
 $engine: 3
 $onesync: on
 name: Bluecoast Qbox (custom)
-version: 1.0.1
+version: 1.0.2
 author: Bluecoast Roleplay
-description: Bluecoast Qbox — core Ox/voice (pma-voice + mm_radio)/banking/weather + your GitHub resources (HUD, sat map, Illenium fork, MDT, garages, drugs, pillbox map). No NPWD. No heist minigames / truck robbery / prison / diving packs.
+description: Bluecoast Qbox — slim Qbox+Ox stack (pma-voice, mm_radio, qbx_chat_theme, radial, scoreboard) + Bluecoast resources (HUD, sat map, Illenium fork, MDT, drugs, pillbox). Items from Oxdata. No NPWD; no safecracker/mhacking/prison/heist minigame packs.
 
 tasks:
   #  Download Base Files
@@ -63,7 +63,7 @@ tasks:
     path: ./tmp/screencapture.zip
     url: https://github.com/itschip/screencapture/releases/latest/download/screencapture.zip
   - action: unzip
-    dest: ./resources/[standalone]/
+    dest: ./resources/[standalone]
     src: ./tmp/screencapture.zip
 
   - action: download_github
@@ -183,9 +183,25 @@ tasks:
     dest: ./resources/[qbx]
     src: ./tmp/qbx_smallresources.zip
 
+  # Required for server.cfg qbx_chat:* join/quit + Mantine theme (stock Qbox includes this)
+  - action: download_github
+    dest: ./resources/[qbx]/qbx_chat_theme
+    ref: main
+    src: https://github.com/Qbox-project/qbx_chat_theme
+
+  - action: download_github
+    dest: ./resources/[qbx]/qbx_radialmenu
+    ref: main
+    src: https://github.com/qbox-project/qbx_radialmenu
+
+  - action: download_github
+    dest: ./resources/[qbx]/qbx_scoreboard
+    ref: main
+    src: https://github.com/qbox-project/qbx_scoreboard
+
   - action: download_file
     path: ./tmp/qbx_density.zip
-    url: https://github.com/Qbox-project/qbx_density/releases/latest/download/qbx_density.zip
+    url: https://github.com/qbox-project/qbx_density/releases/latest/download/qbx_density.zip
   - action: unzip
     dest: ./resources/[qbx]
     src: ./tmp/qbx_density.zip
@@ -259,12 +275,7 @@ tasks:
     dest: ./resources/[ox]
     src: ./tmp/ox_inventory.zip
 
-  # Qbox baseline items (optional baseline); Bluecoast Oxdata overwrites below.
-  - action: move_path
-    src: ./tmp/qbox/items.lua
-    dest: ./resources/[ox]/ox_inventory/data/items.lua
-    overwrite: true
-
+  # Items + icons: Oxdata only (skip duplicate tmp/qbox/items.lua — same as stock baseline then throw away)
   - action: download_github
     dest: ./tmp/oxdata
     ref: main
