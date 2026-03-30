@@ -1,9 +1,9 @@
 $engine: 3
 $onesync: on
 name: Bluecoast Qbox (custom)
-version: 1.0.2
+version: 1.0.5
 author: Bluecoast Roleplay
-description: Bluecoast Qbox — slim Qbox+Ox stack (pma-voice, mm_radio, qbx_chat_theme, radial, scoreboard) + Bluecoast resources (HUD, sat map, Illenium fork, MDT, drugs, pillbox). Items from Oxdata. No NPWD; no safecracker/mhacking/prison/heist minigame packs.
+description: Bluecoast Qbox — slim Qbox+Ox stack (pma-voice, mm_radio, qbx_chat_theme, Bluecoast radial, scoreboard) + Bluecoast resources (HUD, sat map, illenium-appearance, MDT, drugs, pillbox). Items from Oxdata. No NPWD; no safecracker/mhacking/prison/heist minigame packs.
 
 tasks:
   #  Download Base Files
@@ -81,7 +81,7 @@ tasks:
   - action: download_github
     dest: ./resources/[standalone]/illenium-appearance
     ref: main
-    src: https://github.com/Bluecoastroleplay/Illenium-appearance-Rework-
+    src: https://github.com/Bluecoastroleplay/illenium-appearance
 
   - action: download_github
     dest: ./resources/[standalone]/MugShotBase64
@@ -192,7 +192,7 @@ tasks:
   - action: download_github
     dest: ./resources/[qbx]/qbx_radialmenu
     ref: main
-    src: https://github.com/qbox-project/qbx_radialmenu
+    src: https://github.com/Bluecoastroleplay/qbx_radialmenu
 
   - action: download_github
     dest: ./resources/[qbx]/qbx_scoreboard
