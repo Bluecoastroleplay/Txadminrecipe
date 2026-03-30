@@ -12,10 +12,10 @@ tasks:
     ref: main
     dest: ./tmp/qbox
 
-  # Bundled server.cfg (txAdmin fills {{...}} during deploy)
-  - action: move_path
-    src: ./server.cfg
-    dest: ./server.cfg
+  # server.cfg from this repo (required when deploy uses raw recipe.yaml only — no local ./server.cfg exists)
+  - action: download_file
+    url: https://raw.githubusercontent.com/Bluecoastroleplay/Txadminrecipe/main/server.cfg
+    path: ./server.cfg
 
   - action: move_path
     src: ./tmp/qbox/permissions.cfg
