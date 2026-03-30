@@ -1,7 +1,7 @@
 $engine: 3
 $onesync: on
 name: Bluecoast Qbox (custom)
-version: 1.0.0
+version: 1.0.1
 author: Bluecoast Roleplay
 description: Bluecoast Qbox — core Ox/voice (pma-voice + mm_radio)/banking/weather + your GitHub resources (HUD, sat map, Illenium fork, MDT, garages, drugs, pillbox map). No NPWD. No heist minigames / truck robbery / prison / diving packs.
 
@@ -12,10 +12,14 @@ tasks:
     ref: main
     dest: ./tmp/qbox
 
-  # server.cfg from this repo (required when deploy uses raw recipe.yaml only — no local ./server.cfg exists)
-  - action: download_file
-    url: https://raw.githubusercontent.com/Bluecoastroleplay/Txadminrecipe/main/server.cfg
-    path: ./server.cfg
+  # server.cfg: clone this recipe repo (works when deploy only fetches recipe.yaml; avoids stale txAdmin cache on raw URLs)
+  - action: download_github
+    src: https://github.com/Bluecoastroleplay/Txadminrecipe
+    ref: main
+    dest: ./tmp/bc-recipe
+  - action: move_path
+    src: ./tmp/bc-recipe/server.cfg
+    dest: ./server.cfg
 
   - action: move_path
     src: ./tmp/qbox/permissions.cfg
