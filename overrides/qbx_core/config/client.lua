@@ -1,5 +1,5 @@
 -- Bluecoast recipe override — sync with upstream qbx_core/config/client.lua when you update qbx_core.
--- startingApartment = false: recipe has no qbx_apartments; true leaves new chars waiting on apartments:client:setupSpawnUI forever.
+-- startingApartment true: qbx_properties handles apartments:client:setupSpawnUI (not qbx_apartments).
 return {
     statusIntervalSeconds = 5, -- how often to check hunger/thirst status to remove health if 0.
     loadingModelsTimeout = 30000, -- Waiting time for ox_lib to load the models before throws an error, for low specs pc
@@ -9,7 +9,7 @@ return {
     characters = {
         useExternalCharacters = false, -- Whether you have an external character management resource. (If true, disables the character management inside the core)
         enableDeleteButton = true, -- Whether players should be able to delete characters themselves.
-        startingApartment = false, -- false = no qbx_apartments in Bluecoast recipe (avoids infinite black screen on first char)
+        startingApartment = true, -- qbx_properties in recipe; false skips selector and uses spawnNoApartments + default coords
 
         dateFormat = 'YYYY-MM-DD',
         dateMin = '1900-01-01', -- Has to be in the same format as the dateFormat config
