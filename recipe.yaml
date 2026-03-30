@@ -255,9 +255,25 @@ tasks:
     dest: ./resources/[ox]
     src: ./tmp/ox_inventory.zip
 
+  # Qbox baseline items (optional baseline); Bluecoast Oxdata overwrites below.
   - action: move_path
     src: ./tmp/qbox/items.lua
     dest: ./resources/[ox]/ox_inventory/data/items.lua
+    overwrite: true
+
+  - action: download_github
+    dest: ./tmp/oxdata
+    ref: main
+    src: https://github.com/Bluecoastroleplay/Oxdata
+
+  - action: move_path
+    src: ./tmp/oxdata/data/items.lua
+    dest: ./resources/[ox]/ox_inventory/data/items.lua
+    overwrite: true
+
+  - action: copy_path
+    src: ./tmp/oxdata/web/images
+    dest: ./resources/[ox]/ox_inventory/web/images
     overwrite: true
 
   - action: download_github

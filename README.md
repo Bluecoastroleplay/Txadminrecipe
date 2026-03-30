@@ -11,7 +11,8 @@ txAdmin **Server Deployer** recipe (`$engine: 3`): Qbox/Ox/voice **baseline** + 
 
 ## Included (summary)
 
-- **Qbox template:** `txAdminRecipe` → `qbox.sql`, `permissions.cfg`, `ox.cfg`, `voice.cfg`, `misc.cfg`, logo, Qbox **`items.lua`** → `ox_inventory`.
+- **Qbox template:** `txAdminRecipe` → `qbox.sql`, `permissions.cfg`, `ox.cfg`, `voice.cfg`, `misc.cfg`, logo, Qbox **`items.lua`** → `ox_inventory` (then **overwritten** by **`Oxdata`**).
+- **`Oxdata` repo:** `Bluecoastroleplay/Oxdata` → your **`items.lua`** + **`web/images`** into `ox_inventory`.
 - **CFX default** resources, **bob74_ipl**, **Ox** (lib, target, mysql, doorlock, inventory, fuel).
 - **Standalone:** screencapture, Renewed-Banking, **loadscreen**, **mana_audio**, MugShotBase64, Renewed-Weathersync, **vehiclehandler**, scully_emotemenu.
 - **Voice:** pma-voice. **qbx_radio** in `[qbx]`.
