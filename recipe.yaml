@@ -1,9 +1,9 @@
 $engine: 3
 $onesync: on
 name: Bluecoast Qbox (custom)
-version: 1.0.6
+version: 1.0.8
 author: Bluecoast Roleplay
-description: Bluecoast Qbox — slim Qbox+Ox stack (pma-voice, mm_radio, qbx_chat_theme, Bluecoast radial, scoreboard) + Bluecoast resources (HUD, sat map, illenium-appearance, MDT, drugs, pillbox). Items from Oxdata. No NPWD; no safecracker/mhacking/prison/heist minigame packs.
+description: Bluecoast Qbox — slim Qbox+Ox stack (pma-voice, mm_radio, qbx_chat_theme, radial, scoreboard, qbx_idcard) + Bluecoast resources (HUD, sat map, illenium-appearance, MDT, drugs, pillbox). Items from Oxdata. No NPWD; no safecracker/mhacking/prison/heist minigame packs.
 
 tasks:
   #  Download Base Files
@@ -144,6 +144,12 @@ tasks:
   - action: query_database
     file: ./resources/[qbx]/qbx_core/qbx_core.sql
 
+  # Strip properties + NPWD from characterDataTables (not installed by this recipe) — see overrides/qbx_core/config/server.lua
+  - action: copy_path
+    src: ./tmp/bc-recipe/overrides/qbx_core/config/server.lua
+    dest: ./resources/[qbx]/qbx_core/config/server.lua
+    overwrite: true
+
   - action: download_file
     path: ./tmp/qbx_vehicles.zip
     url: https://github.com/qbox-project/qbx_vehicles/releases/latest/download/qbx_vehicles.zip
@@ -244,6 +250,12 @@ tasks:
   - action: unzip
     dest: ./resources/[qbx]
     src: ./tmp/qbx_vehiclekeys.zip
+
+  # Required by qbx_core shared.lua starting items (id_card, driver_license metadata via exports.qbx_idcard)
+  - action: download_github
+    dest: ./resources/[qbx]/qbx_idcard
+    ref: main
+    src: https://github.com/Qbox-project/qbx_idcard
 
   # OX
   - action: download_file
